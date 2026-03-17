@@ -1,69 +1,530 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Osama</title>
+    <title>Mohamed Osama | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050608;
+            --surface: #111419;
+            --paper: #0e1218;
+            --ink: #e7edf5;
+            --muted: #9aa9bc;
+            --accent: #f16a2d;
+            --accent-2: #3fc0b4;
+            --ring: #1f2b3a;
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 10%, rgba(241, 106, 45, 0.14) 0%, transparent 30%),
+                radial-gradient(circle at 88% 20%, rgba(63, 192, 180, 0.14) 0%, transparent 28%),
+                linear-gradient(180deg, var(--bg), #030405);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: -1;
+            opacity: 0.45;
+            animation: floatGlow 11s ease-in-out infinite;
+        }
+
+        body::before {
+            top: -140px;
+            right: -120px;
+            background: rgba(241, 106, 45, 0.34);
+        }
+
+        body::after {
+            bottom: -170px;
+            left: -120px;
+            background: rgba(63, 192, 180, 0.3);
+            animation-delay: -3s;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(8, 11, 15, 0.82);
+            border-bottom: 1px solid rgba(42, 157, 143, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-wrap {
+            max-width: 1100px;
+            margin: auto;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffd6c7;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 18px rgba(241, 106, 45, 0.55);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(31, 42, 46, 0.1);
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 16px rgba(241, 106, 45, 0.35);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 28px 18px 40px;
+            display: grid;
+            gap: 22px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(18, 23, 31, 0.96), rgba(12, 16, 23, 0.96));
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(241, 106, 45, 0.55), rgba(63, 192, 180, 0.35), rgba(255, 255, 255, 0.08));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 24px;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 22px rgba(241, 106, 45, 0.25);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.55), 0 0 30px rgba(241, 106, 45, 0.4);
+        }
+
+        h1 {
+            font-size: 2.15rem;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            letter-spacing: 0.3px;
+            background: linear-gradient(90deg, #ffffff 0%, #ffc7b1 42%, #8ff4ea 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            margin-bottom: 8px;
+            font-size: 1.45rem;
+            color: var(--accent-2);
+            position: relative;
+            display: inline-block;
+            padding-inline-end: 44px;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            inset-inline-end: 0;
+            width: 34px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent));
+        }
+
+        p {
+            color: var(--muted);
+        }
+
+        .controls {
+            margin-top: 14px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--accent), #ec7a57);
+            border-radius: 12px;
+            padding: 9px 14px;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(241, 106, 45, 0.35);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+
+        .image-tile {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(31, 42, 46, 0.1);
+            background: linear-gradient(180deg, #10161f, #0d1118);
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .image-tile img {
+            width: 100%;
+            height: 260px;
+            object-fit: contain;
+            background: #06080c;
+            padding: 6px;
+            display: block;
+            transition: transform 0.28s ease;
+            transform-origin: center;
+        }
+
+        .image-tile:hover {
+            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.48);
+            transform: translateY(-4px);
+        }
+
+        .image-tile:hover img {
+            transform: scale(1.045);
+        }
+
+        .image-tile .caption {
+            padding: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .image-tile .caption span {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatGlow {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(14px) scale(1.07);
+            }
+        }
+
+        .card {
+            animation: reveal 0.55s ease both;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        @media (max-width: 980px) {
+            .container {
+                padding: 20px 14px 32px;
+            }
+
+            .hero {
+                grid-template-columns: 140px 1fr;
+                gap: 16px;
+            }
+
+            .avatar {
+                width: 140px;
+                height: 140px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .avatar {
+                margin: auto;
+            }
+
+            .controls {
+                justify-content: center;
+            }
+
+            .nav-wrap {
+                flex-direction: column;
+                align-items: center;
+                padding: 12px 12px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .nav-links a {
+                flex: 1 1 calc(50% - 8px);
+                text-align: center;
+                font-size: 0.92rem;
+                padding: 8px 10px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-tile img {
+                height: 240px;
+            }
+
+            h2::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 520px) {
+            body::before,
+            body::after {
+                width: 280px;
+                height: 280px;
+                filter: blur(55px);
+            }
+
+            .card {
+                padding: 16px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 1.55rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+                padding-inline-end: 0;
+            }
+
+            p {
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .image-tile img {
+                height: 210px;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .avatar:hover {
+                transform: none;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 22px rgba(241, 106, 45, 0.25);
+            }
+
+            .image-tile:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            .image-tile:hover img {
+                transform: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="card">
-        <img class="avatar" src="WhatsApp Image 2025-12-19 at 6.16.39 PM.jpeg" alt="me">
-        <div class="user">
-            <h1>mohamed osama</h1>
-            <p>I am a student at the Faculty of Computers and AI</p>
+    <nav class="navbar">
+        <div class="nav-wrap">
+            <div class="brand">Mohamed Osama</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#college">College</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#projects">Projects</a>
+            </div>
         </div>
-        <div class="controls">
-            <a class="btn" href="https://www.facebook.com/mohamed.osama.97778" target="_blank" rel="noopener">Facebook</a>
-            <a class="btn" href="https://www.instagram.com/mohamedosama1182/" target="_blank" rel="noopener">Instagram</a>
-            <a class="btn" href="https://wa.me/01146778709" target="_blank" rel="noopener">WhatsApp</a>
-        </div>
-    </div>
-    <style>
-        body{
-            background-color: #0b0b0c;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card{
-            width: 340px;
-            padding: 26px 22px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.02);
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            gap:12px;
-            box-shadow: 0 12px 30px rgba(2,6,23,0.6);
-            transition: transform .18s cubic-bezier(0.075, 0.82, 0.165, 1);
-        }
-        .user{
-            color: #e6eef6;
-            text-align:center;
-            margin: 0;
-        }
-        .card:hover{
-            transform: translateY(-6px) scale(1.02);
-        }
-        .avatar{
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 8px 18px rgba(2,6,23,0.5);
-            transition: transform .28s ease, box-shadow .28s ease;
-            margin-bottom:8px;
-        }
-        .avatar:hover{transform: translateY(-6px) scale(1.03); box-shadow: 0 18px 40px rgba(2,6,23,0.65)}
-        .controls{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;justify-content:center}
-        .btn{display:inline-block;padding:8px 12px;border-radius:999px;text-decoration:none;color:#042223;background:linear-gradient(90deg,#5eead4,#06b6d4);border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.45);transition:transform .15s,opacity .12s}
-        .btn:hover{transform:translateY(-3px);opacity:0.95}
-    </style>
-    
-</body>
+    </nav>
 
+    <main class="container">
+        <section id="about" class="card hero">
+            <img class="avatar" src="imgs/WhatsApp Image 2025-12-19 at 6.16.39 PM.jpeg" alt="My profile photo">
+            <div>
+                <h1>Mohamed Osama</h1>
+                <p>I am a student at the Faculty of Computers and AI. I enjoy coding, design, and building practical web projects. I am also athletic, and I love football and bodybuilding.</p>
+                <div class="controls">
+                    <a class="btn" href="https://www.facebook.com/mohamed.osama.97778" target="_blank" rel="noopener">Facebook</a>
+                    <a class="btn" href="https://www.instagram.com/mohamedosama1182/" target="_blank" rel="noopener">Instagram</a>
+                    <a class="btn" href="https://wa.me/01146778709" target="_blank" rel="noopener">WhatsApp</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="college" class="card">
+            <h2>About My College</h2>
+            <p>I study at the Faculty of Computers and Artificial Intelligence, where I focus on programming, problem solving, and software engineering fundamentals.</p>
+        </section>
+
+        <section id="gallery" class="card">
+            <h2>Photo Gallery</h2>
+            <div class="grid">
+                <article class="image-tile">
+                    <img src="imgs/WhatsApp Image 2025-12-19 at 6.16.39 PM.jpeg" alt="Personal photo">
+                    <div class="caption">Personal Shot</div>
+                </article>
+                <article class="image-tile">
+                    <img src="imgs/24c35350-1484-498c-8af2-95aa71e6419d.jpg" alt="Personal photo 2">
+                    <div class="caption">Personal Photo 02</div>
+                </article>
+                <article class="image-tile">
+                    <img src="imgs/87a7a5d9-e47c-4817-ab4e-ee5e5886f76f.jpg" alt="Personal photo 3">
+                    <div class="caption">Personal Photo 03</div>
+                </article>
+            </div>
+        </section>
+
+        <section id="projects" class="card">
+            <h2>My Projects</h2>
+            <div class="grid">
+                <article class="image-tile">
+                    <img src="imgs/Screenshot 2026-03-10 051427.png" alt="Project 1 screenshot">
+                    <div class="caption">Project 01
+                        <span>Screenshot from a separate project. This one has its own layout and UI flow.</span>
+                    </div>
+                </article>
+                <article class="image-tile">
+                    <img src="imgs/Screenshot 2026-01-26 191716.png" alt="Project 2 screenshot">
+                    <div class="caption">Project 02
+                        <span>Screenshot from a different project with a different idea and implementation.</span>
+                    </div>
+                </article>
+                <article class="image-tile">
+                    <img src="imgs/Screenshot 2025-12-22 171713.png" alt="Project 3 screenshot">
+                    <div class="caption">Project 03
+                        <span>Screenshot from another standalone project, not related to the other two projects.</span>
+                    </div>
+                </article>
+                <article class="image-tile">
+                    <img src="imgs/Screenshot 2026-03-17 061401.png" alt="Project 4 screenshot">
+                    <div class="caption">Project 04
+                        <span>Additional standalone project screenshot moved from gallery to projects section.</span>
+                    </div>
+                </article>
+                <article class="image-tile">
+                    <img src="imgs/Screenshot 2026-03-17 061501.png" alt="Project 5 screenshot">
+                    <div class="caption">Project 05
+                        <span>Another separate project screenshot now grouped correctly under projects.</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
 </html>
